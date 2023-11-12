@@ -1,0 +1,23 @@
+server:
+  port: 9527
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+#          lower-case-service-id: true
+      #配置需要进行动态路由的服务列表
+      routes:
+        - id: nacos-Lin-Core
+          uri: lb://nacos-Lin-Core
+          predicates:
+            - Path=/user/**
+          filters:
+            - StripPrefix=1
